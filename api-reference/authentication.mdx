@@ -1,22 +1,23 @@
 ---
 title: "Authentication"
-description: "Example overview page before API endpoints"
+description: "Authentication of Prompt Wrangler API"
+icon: "lock"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et eros iaculis tortor dapibus cursus. Curabitur quis sapien nec tortor dictum gravida.
+To authenticate via the API you should pass in an API key via the `x-api-key` header:
 
 ```bash
-'Authorization': 'Token <team_token>'
+'x-api-key': '<API_KEY>'
 ```
 
-## API Tokens
+## API Keys
 
-Nullam convallis mauris at nunc consectetur, ac imperdiet leo rutrum. Maecenas cursus purus a pellentesque blandit. Pellentesque vitae lacinia libero, non mollis metus.
+To create an API Key go into the Prompt Wrangler interface, click on API Keys and then create a new one.
 
-Nam id ullamcorper urna, at rutrum enim. [Maecenas vulputate](/introduction) vehicula libero, vitae sodales augue pretium nec. Quisque a magna tempor, semper risus vel, fermentum nunc. Pellentesque fermentum interdum ex, eu convallis massa blandit sed. Aliquam bibendum ipsum vel laoreet auctor.
+## Public Prompts
 
-### Permissions
+If you are trying to use a prompt that is public you can alternaltiy pass in a `x-openai-api-key` instead of an `x-api-key` header. This will allow you to use the API without an account for `public` prompts.
 
-Etiam lobortis ut odio ut fermentum. Nunc odio velit, sollicitudin at consectetur id, tristique eget turpis. Aliquam at risus vitae dolor sodales venenatis. In hac habitasse platea dictumst.
-
-Aenean consequat diam eget mollis fermentum. [Quisque eu malesuada](/introduction) felis, non dignissim libero.
+```bash
+'x-openai-api-key': '<OPENAI_API_KEY>'
+```

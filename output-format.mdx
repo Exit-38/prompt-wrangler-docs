@@ -1,0 +1,15 @@
+---
+title: "Output Format"
+description: "Prompt Wrangler will automatically parse the output from LLMs and convert the output into `code`, `json`, `number` or just plain `text`"
+---
+
+The output format defaults to text but can be easily changed via the prompt version configuration.
+
+![Output Format](/images/output-schema.png)
+
+<Warning>
+  If the Output Format is set to something other than `text` then the output
+  will be parsed and converted to the specified format. You are guranteed to get
+  back a response in the specified format. If the output cannot be parsed then
+  an error will be thrown.
+</Warning>

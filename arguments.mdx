@@ -1,0 +1,12 @@
+---
+title: "Arguments"
+description: "Prompt Wrangler accepts a structured JSON object rather then a prompt when running a prompt"
+---
+
+When running a prompt you pass in a series of arguments. These arguments are passed in as a JSON object. Each prompt has a specific argument schema that these arguments need to conform to. In order to configure your arg schema you should click the gear icon the prompt editor.
+
+![Arg Schema](/images/arg-schema.png)
+
+If you want to pass in arbitrary json use the `json` option and Prompt Wrangler will automatically format as json. This is good for free-form unstructured data.
+
+If your arguments don't conform to the schema you will get an error message.

@@ -1,0 +1,103 @@
+---
+title: "Run Prompt"
+api: "POST https://prompt-wrangler.com/api/predict/$workspace_slug/$prompt_slug"
+description: "This endpoint updates an existing user."
+---
+
+### Body
+
+<ParamField body="workspace_slug" type="string" type="query">
+  This is the slug of the workspace that contains the prompt.
+</ParamField>
+
+<ParamField body="prompt_slug" type="string" type="query">
+  This is the slug for your prompt.
+</ParamField>
+<ParamField body="args" type="object" type="query">
+  These are the arguments that are passed into your prompt. Make sure these
+  argument match the schema for the prompt.
+</ParamField>
+
+<ParamField body="x-api-key" type="string" type="header">
+  This is the API Key for authentication. This should be passed as a header.
+  View [Authentication](/api-reference/authentication) for more information
+</ParamField>
+
+### Response
+
+<ResponseField name="prediction">
+  The prediction from the prompt. This could be any type depending on your
+  output format. You can learn more about the output format in the [Output
+  Format](/output-format) section.
+</ResponseField>
+
+<ResponseField name="outputFormatType" type="string">
+  The type of output. This could either be `json`, `text`, `number` or `code`.
+</ResponseField>
+
+<ResponseField name="totalTime" type="number">
+  The total time it took to run the prompt in milliseconds.
+</ResponseField>
+
+<ResponseField name="links" type="object">
+
+The contents of the user group
+
+<Expandable title="Toggle links">
+
+<ResponseField name="log" type="string">
+  A link to view the logs for this prompt run.
+</ResponseField>
+
+<ResponseField name="editor" type="string">
+  A link to view the editor for this prompt run.
+</ResponseField>
+
+</Expandable>
+
+</ResponseField>
+
+<RequestExample>
+
+```bash curl
+curl --location --request POST 'https://prompt-wrangler.com/api/predict/$workspace_slug/$prompt_slug' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <API_KEY>' \
+--data-raw '{
+    "args": { "input": "value" },
+}'
+```
+
+```python python
+from prompt_wrangler import PromptWrangler
+
+# Create a PromptWrangler instance
+pw = PromptWrangler()
+
+# Get a prompt
+prompt_path = "my-workspace/my-prompt-slug"
+prompt = prompt_wrangler.prompt(prompt_path)
+
+# Run the prompt
+args = {'input_text': 'some input'}
+result = prompt.run(args=args)
+prediction = result.prediction
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "success": 1,
+  "user_group": {
+    "team_id": 113,
+    "token": "<user_group_token_to_auth_dashboard>",
+    "name": "ok",
+    "provided_id": "6"
+  }
+}
+```
+
+</ResponseExample>
