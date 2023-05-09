@@ -13,9 +13,16 @@
       "url": "api-reference"
     }
   ],
+
   "topbarCtaButton": {
     "name": "Get Started",
     "url": "https://prompt-wrangler.com/auth"
+  },
+  "api": {
+    "baseUrl": "https://prompt-wrangler.com/api",
+    "playground": {
+      "mode": "hide"
+    }
   },
   "anchors": [
     {
@@ -30,12 +37,15 @@
       "pages": ["introduction", "features", "arguments", "output-format"]
     },
     {
-      "group": "API Documentation",
+      "group": "Libraries",
       "pages": [
-        "api-reference/authentication",
-        "api-reference/python",
-        "api-reference/endpoint/run"
+        "api-reference/client-libraries/python",
+        "api-reference/client-libraries/javascript"
       ]
+    },
+    {
+      "group": "REST API",
+      "pages": ["api-reference/endpoints/run", "api-reference/authentication"]
     }
   ]
 }

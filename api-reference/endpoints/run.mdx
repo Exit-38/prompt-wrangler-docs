@@ -1,25 +1,29 @@
 ---
 title: "Run Prompt"
-api: "POST https://prompt-wrangler.com/api/predict/$workspace_slug/$prompt_slug"
+api: "POST /predict/{workspace_slug}/{prompt_slug}"
 description: "This endpoint updates an existing user."
 ---
 
 ### Body
 
-<ParamField body="workspace_slug" type="string" type="query">
+<ParamField body="workspace_slug" type="string" type="path">
   This is the slug of the workspace that contains the prompt.
 </ParamField>
 
-<ParamField body="prompt_slug" type="string" type="query">
+<ParamField body="prompt_slug" type="string" type="path">
   This is the slug for your prompt.
 </ParamField>
-<ParamField body="args" type="object" type="query">
+<ParamField body="args" type="object" type="body">
   These are the arguments that are passed into your prompt. Make sure these
   argument match the schema for the prompt.
 </ParamField>
 
 <ParamField body="x-api-key" type="string" type="header">
   This is the API Key for authentication. This should be passed as a header.
+  View [Authentication](/api-reference/authentication) for more information
+</ParamField>
+<ParamField body="Content-Type" type="string" type="header">
+  This is the content type of the request. This should be passed as a header.
   View [Authentication](/api-reference/authentication) for more information
 </ParamField>
 
@@ -60,7 +64,7 @@ The contents of the user group
 <RequestExample>
 
 ```bash curl
-curl --location --request POST 'https://prompt-wrangler.com/api/predict/$workspace_slug/$prompt_slug' \
+curl --location --request POST '/predict/$workspace_slug/$prompt_slug' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: <API_KEY>' \
 --data-raw '{
@@ -84,18 +88,34 @@ result = prompt.run(args=args)
 prediction = result.prediction
 ```
 
+```typescript javascript (node)
+import { PromptWrangler } from "prompt-wrangler";
+
+// Create a PromptWrangler instance
+const pw = new PromptWrangler();
+
+// Get a prompt
+const prompt_path = "my-workspace/my-prompt-slug";
+const prompt = pw.prompt(prompt_path);
+
+// Run the prompt
+const args = { input_text: "some input" };
+const result = await prompt.run(args);
+const prediction = result.prediction;
+```
+
 </RequestExample>
 
 <ResponseExample>
 
 ```json Response
 {
-  "success": 1,
-  "user_group": {
-    "team_id": 113,
-    "token": "<user_group_token_to_auth_dashboard>",
-    "name": "ok",
-    "provided_id": "6"
+  "prediction": "Hey! How can I assist you today?",
+  "totalTime": 52,
+  "outputFormatType": "string",
+  "links": {
+    "log": "http://localhost:3002/s/ms-test/prompts/test-prompt/logs/1374",
+    "editor": "http://localhost:3002/s/ms-test/prompts/test-prompt/edit?logId=1374"
   }
 }
 ```

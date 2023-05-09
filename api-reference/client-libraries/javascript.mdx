@@ -1,0 +1,89 @@
+---
+title: "Javascript (Node)"
+description: "Using the Prompt Wrangler javascript library in Node.js"
+icon: "js"
+---
+
+## Installation
+
+You can install the package:
+
+<CodeGroup>
+```bash npm
+npm install prompt-wrangler
+```
+
+```bash yarn
+yarn add prompt-wrangler
+```
+
+```bash pnpm
+pnpm add prompt-wrangler
+```
+
+</CodeGroup>
+
+## Usage
+
+To use the package, you need to create an instance of the `PromptWrangler` class.
+
+```javascript
+const { PromptWrangler } = require("prompt-wrangler");
+
+const pw = new PromptWrangler();
+```
+
+Once you have an instance of the `PromptWrangler` class, you can use it to create a prompt and run it with the desired arguments:
+
+```typescript
+const prompt = pw.prompt("my_workspace/my_prompt");
+const args = {
+  name: "John",
+};
+
+const res = await prompt.run(args);
+console.log(res.prediction);
+```
+
+## Schemas
+
+You can optionally pass in an arg Zod schema and an output Zod schema to get a strongly typed run function as well as run time validation.
+
+### Argument Schema
+
+The argument schema needs to match the [schema specified on the Prompt](https://docs.prompt-wrangler.com/arguments). You can optionally pass in a schema when creating the prompt.
+
+```typescript
+import { z } from "zod";
+
+// Schema for the arguments
+const argSchema = z.object({
+  name: z.string(),
+});
+
+const prompt = promptWrangler.prompt("my_workspace/my_prompt", {
+  argSchema: argSchema,
+});
+```
+
+### Output Schema
+
+The output schema needs to match the [output format](https://docs.prompt-wrangler.com/output-format) and structure defined in the prompt. Generally, an output schema is used when the format is JSON and a specific schema is passed into the prompt. This will validate that the schema matches what you expect.
+
+```typescript
+import { z } from "zod";
+
+// Schema for the output
+const outputSchema = z.object({
+  key: z.string(),
+});
+
+const prompt = promptWrangler.prompt("my_workspace/my_prompt", {
+  outputSchema: outputSchema,
+});
+
+const res = await prompt.run(args);
+
+// Prediction is guaranteed to match the output schema and strongly typed
+const prediction = res.prediction;
+```
