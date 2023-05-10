@@ -34,7 +34,13 @@
   "navigation": [
     {
       "group": "Home",
-      "pages": ["introduction", "features", "arguments", "output-format"]
+      "pages": [
+        "introduction",
+        "features",
+        "prompt-writing",
+        "arguments",
+        "output-format"
+      ]
     },
     {
       "group": "Libraries",

@@ -1,0 +1,133 @@
+---
+title: Prompt Writing
+description: "Prompt Wrangler makes it easy to write templated prompts"
+---
+
+# Prompt Writing
+
+Prompt Wrangler uses [Handlebars](https://handlebarsjs.com/), a popular templating language, to construct prompts dynamically. This guide will walk you through how to construct and manipulate prompts using Handlebars and the special features provided by Prompt Wrangler.
+
+## Accessing Arguments
+
+You can access arguments within your prompt using the following syntax:
+
+```
+{{{ args.ARG_NAME }}}
+```
+
+Replace `ARG_NAME` with the name of the argument you wish to access.
+
+<Note>
+We recommend using `{{{ }}}` instead of `{{ }}`, as the former does not escape output, which is useful since we're not dealing with HTML here.
+</Note>
+
+## Special Variables
+
+There are a couple of special system variables you can use:
+
+- `{{{ system.today }}}`: Inserts the current date
+- `{{{ system.now }}}`: Inserts the current date and time
+
+## Handlebars Features
+
+You can utilize all the features of Handlebars, including conditional logic. For example:
+
+```handlebars
+{{#if args.condition}}
+  This will display if args.condition is truthy.
+{{else}}
+  This will display if args.condition is falsy.
+{{/if}}
+```
+
+## Helpers
+
+### Limit Strings
+
+Prompt Wrangler also includes a `limit` helper that allows you to limit the number of tokens in a text string. This can be useful for constraining the length of your output text.
+
+The `limit` helper takes two parameters: the text to limit, and the maximum number of tokens. Please note that the number of tokens is an approximation.
+
+Here's how to use the `limit` helper:
+
+```handlebars
+{{{limit args.test 100}}}
+```
+
+In this example, `args.test` is the text string you want to limit, and `100` is the maximum number of tokens. If `args.test` contains more than 100 tokens, only the first 100 will be displayed.
+
+Note: Tokens in this context are not necessarily single words; they can also be punctuation, special characters, or other meaningful units of text as determined by the underlying system.
+
+### JSON Formatting
+
+Prompt Wrangler provides several built-in helpers to format JSON arguments:
+
+- `table`: formats the JSON as a markdown table
+- `json`: formats the JSON as a JSON string
+- `yaml`: formats the JSON as a YAML string
+
+For the `table` helper, you can use the `c` option to order and filter the columns. The `c` option takes a comma-separated list of column names.
+
+### Examples:
+
+Here's an example that uses the `table` helper:
+
+```handlebars
+{{{table args.json c="id,animal"}}}
+```
+
+Here's an example that uses the `json` helper:
+
+```handlebars
+{{{json args.json}}}
+```
+
+Here's an example that uses the `yaml` helper:
+
+```handlebars
+{{{yaml args.json}}}
+```
+
+By using these helpers and Handlebars syntax, you can create dynamic, powerful prompts for your application.
+
+## Frequently Asked Questions
+
+#### 1. What is the Handlebars syntax used for in Prompt Wrangler?
+
+Handlebars is a popular templating language that Prompt Wrangler uses for constructing dynamic prompts. It provides various features like accessing arguments, conditional logic, and using built-in helpers for formatting.
+
+#### 2. How do I access arguments in my prompt?
+
+You can access arguments in your prompt using the `{{{ args.ARG_NAME }}}` syntax. Replace `ARG_NAME` with the actual name of the argument you want to access.
+
+#### 3. Why should I use `{{{ }}}` instead of `{{ }}` in Prompt Wrangler?
+
+We recommend using `{{{ }}}` because it does not escape output. This is useful since we're not dealing with HTML in Prompt Wrangler.
+
+#### 4. How do I use the special system variables?
+
+There are two special system variables that you can use in Prompt Wrangler. `{{{ system.today }}}` inserts the current date, and `{{{ system.now }}}` inserts the current date and time.
+
+#### 5. Can I use conditional logic in Handlebars?
+
+Yes, Handlebars supports conditional logic. For example:
+
+```handlebars
+{{#if args.condition}}
+  This will display if args.condition is truthy.
+{{else}}
+  This will display if args.condition is falsy.
+{{/if}}
+```
+
+#### 6. How do I format JSON arguments in Prompt Wrangler?
+
+You can use the built-in helpers `table`, `json`, and `yaml` to format JSON arguments. You can also order and filter columns in the table helper using the `c` option.
+
+#### 7. How do I limit the number of tokens in a text string?
+
+You can use the `limit` helper to restrict the number of tokens in a text string. For example, `{{{ limit args.test 100 }}}` will limit the text string `args.test` to approximately 100 tokens.
+
+#### 8. What is a token in the context of the `limit` helper?
+
+The limit helper uses an approximation of 2.5 characters per token. This is a conservative estimate that should work for most use cases.
