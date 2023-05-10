@@ -68,7 +68,7 @@ Prompt Wrangler provides several built-in helpers to format JSON arguments:
 
 For the `table` helper, you can use the `c` option to order and filter the columns. The `c` option takes a comma-separated list of column names.
 
-### Examples:
+#### Examples:
 
 Here's an example that uses the `table` helper:
 
@@ -89,6 +89,14 @@ Here's an example that uses the `yaml` helper:
 ```
 
 By using these helpers and Handlebars syntax, you can create dynamic, powerful prompts for your application.
+
+### Combining Helpers
+
+Helpers can be combined together uses parentheses and a nested syntax. For example if you want to convert to yaml but only include the first 20 tokens you could do the following:
+
+```handlebars
+{{{limit (yaml args.json) 20}}}
+```
 
 ## Frequently Asked Questions
 
