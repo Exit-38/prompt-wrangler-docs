@@ -30,7 +30,9 @@ There are a couple of special system variables you can use:
 
 ## Handlebars Features
 
-You can utilize all the features of Handlebars, including conditional logic. For example:
+You can utilize all the features of Handlebars. Here are some common examples:
+
+### Conditional Logic
 
 ```handlebars
 {{#if args.condition}}
@@ -40,7 +42,20 @@ You can utilize all the features of Handlebars, including conditional logic. For
 {{/if}}
 ```
 
+### Loops
+
+If you pass in JSON that contain and array you can use the `#each` helper to loop over the array. For example.
+
+```handlebars
+{{#each args.tools}}
+  {{{this.name}}}:
+  {{{this.description}}}
+{{/each}}
+```
+
 ## Helpers
+
+Prompt Wrangler comes with some built in helpers to deal with common scenarios.
 
 ### Limit Strings
 
@@ -139,3 +154,7 @@ You can use the `limit` helper to restrict the number of tokens in a text string
 #### 8. What is a token in the context of the `limit` helper?
 
 The limit helper uses an approximation of 2.5 characters per token. This is a conservative estimate that should work for most use cases.
+
+#### 9. Why do I see `[object Object]` in my prompt?
+
+You will see `[object object]` if you try to pass in a JSON argument without formatting it. For example if the argument is `tools` and you pass in `{{{ tools }}}` you will see `[object object]`. Instead you should use `{{{ json tools }}}` or another one of the formatters to format the JSON argument.
