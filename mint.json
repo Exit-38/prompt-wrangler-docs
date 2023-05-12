@@ -37,6 +37,7 @@
       "pages": [
         "introduction",
         "features",
+        "prompt-versioning",
         "prompt-writing",
         "arguments",
         "output-format"

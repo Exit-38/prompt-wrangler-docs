@@ -1,0 +1,41 @@
+---
+title: "Prompt Versioning"
+description: "Prompt Wrangler uses semantic versioning to make it easy to manage prompt versions across your environments."
+---
+
+<Info>
+  TL;DR: Prompt Wrangler utilizes semantic versioning for your prompts. Specify
+  a version number using '@'. We recommend pinning to major versions, such as
+  `my-workspace/my-prompt@1.X.X`. If you wish to pin to a specific version, you
+  could do something like `my-workspace/my-prompt@2.3.1`.
+</Info>
+
+Prompt Wrangler assists you in managing new versions of your prompts and implementing them across your environments. Traditionally, if you're calling LLMs directly, you will version your prompts right alongside your code. However, this approach can lead to challenges with monitoring, debugging, and iterating on prompts.
+
+Prompt Wrangler allows you to decouple your prompts from your code base and manage them as if they were an external API. With each modification to your prompts in Prompt Wrangler, you'll create new versions.
+
+# Semantic Versioning
+
+Prompt Wrangler uses [semantic versioning](https://semver.org/) to ensure that your production environments remain stable as prompts evolve. Semantic versioning consists of `major`, `minor`, and `patch` version numbers. When you create a new prompt in Prompt Wrangler, it will be assigned a version number of `1.0.0`. This corresponds to major = 1, minor = 0, and patch = 0.
+
+### Patch
+
+When you revise the prompt itself and save new versions, the patch number will increment, as in 1.0.1, 1.0.2, and so forth.
+
+### Minor
+
+If you modify the LLM configuration, such as switching from GPT 3.5 to GPT 4, this will result in a new minor version. So, it would transition from 1.0.3 to 1.1.0, for instance.
+
+### Major
+
+Changes to the arg schema or the output format will result in a new major version. As these changes are often breaking (for instance, the output changing from a string to JSON), they result in a new major version. Simply update the code wherever you're using this prompt to upgrade to the new version.
+
+# Specifying Versions
+
+When calling the API, you should specify a semantic version. To do this, append @MAJOR.MINOR.PATCH to your prompt. The minor or patch can be omitted if you want to auto-upgrade. For most projects, we recommend pinning to a major version. Let's imagine my workspace is `dunder-mifflin` and my prompt is `toby-sucks`. Here are some examples:
+
+- `dunder-mifflin/toby-sucks@1.X.X` - This will always use the latest version of the prompt with major version 1. So, if you are on 1.0.3 it will use that, but if you upgrade to 1.1.0, it will use that.
+
+- `dunder-mifflin/toby-sucks@1.1.X` - This will always use the latest version of the prompt with major version 1 and minor version 1. So, if you are on 1.1.3, it will use that, but if you upgrade to 1.1.4, it will use that.
+
+- `dunder-mifflin/toby-sucks@1.2.3` - This will use the exact version `1.2.3`, assuming it exists.
