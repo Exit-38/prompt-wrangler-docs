@@ -103,7 +103,31 @@ Here's an example that uses the `yaml` helper:
 {{{yaml args.json}}}
 ```
 
-By using these helpers and Handlebars syntax, you can create dynamic, powerful prompts for your application.
+### Randomization
+
+In certain situations you want to force random results and using random prompt injection is a great way to do that. There are two helpers that can be used for this.
+
+#### Random
+
+The `random` helper picks a random integer in a given range. For example if you wanted to pick a random number between 1 and 10 you could do the following:
+
+```handlebars
+{{{random 1 10}}}
+```
+
+#### Pick Random
+
+The `pickRandom` helper picks a random item from a list of items. For example if you wanted to pick a random item from a list of strings you could do the following:
+
+```handlebars
+{{{pickRandom "short" "medium" "long" "very long"}}}
+```
+
+You can also use this helper with an array passed in as an argument. If you passed in an argument named `string_array` you could do the following:
+
+```handlebars
+{{{pickRandom args.string_array}}}
+```
 
 ### Combining Helpers
 
