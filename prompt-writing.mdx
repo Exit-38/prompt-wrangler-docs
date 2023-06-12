@@ -28,31 +28,6 @@ There are a couple of special system variables you can use:
 - `{{{ system.today }}}`: Inserts the current date
 - `{{{ system.now }}}`: Inserts the current date and time
 
-## Handlebars Features
-
-You can utilize all the features of Handlebars. Here are some common examples:
-
-### Conditional Logic
-
-```handlebars
-{{#if args.condition}}
-  This will display if args.condition is truthy.
-{{else}}
-  This will display if args.condition is falsy.
-{{/if}}
-```
-
-### Loops
-
-If you pass in JSON that contain and array you can use the `#each` helper to loop over the array. For example.
-
-```handlebars
-{{#each args.tools}}
-  {{{this.name}}}:
-  {{{this.description}}}
-{{/each}}
-```
-
 ## Helpers
 
 Prompt Wrangler comes with some built in helpers to deal with common scenarios.
@@ -135,6 +110,74 @@ Helpers can be combined together uses parentheses and a nested syntax. For examp
 
 ```handlebars
 {{{limit (yaml args.json) 20}}}
+```
+
+## Message Seperators (System Messages)
+
+If you are using a chat style model `gpt-4`, `gpt-3.5-turbo` you can improve prompt performance by splitting up assistant, user and system messages. To do this in prompt wrangler simply insert the special message break syntax: `>>> ROLE`
+
+Here is a quick example:
+
+```
+>>> SYSTEM
+You are a chatbot who can only respond in emojies
+
+>>> ASSISTANT
+👋
+
+>>> USER
+Doing well. What's your favorite color
+```
+
+This is equivalent to the following JSON structure in the API:
+
+```json
+[
+  {
+    "role": "SYSTEM",
+    "text": "You are a chatbot who can only respond in emojies"
+  },
+  {
+    "role": "ASSISTANT",
+    "text": "👋"
+  },
+  {
+    "role": "USER",
+    "text": "Doing well. What's your favorite color"
+  }
+]
+```
+
+Here are some additional important notes:
+
+- You can use variables in any of the message roles. If you don't specify a role it will default to `USER`.
+- If you don't specify a system message and use a chat model a default system message will be added
+- Any message splits will automatically be removed if you are using a non-chat model
+- There are only three valid roles: `SYSTEM`, `ASSISTANT`, and `USER`. Any other role will be ignored.
+
+## Advanced Handlebars Features
+
+You can utilize all the features of Handlebars. Here are some common examples:
+
+### Conditional Logic
+
+```handlebars
+{{#if args.condition}}
+  This will display if args.condition is truthy.
+{{else}}
+  This will display if args.condition is falsy.
+{{/if}}
+```
+
+### Loops
+
+If you pass in JSON that contain and array you can use the `#each` helper to loop over the array. For example.
+
+```handlebars
+{{#each args.tools}}
+  {{{this.name}}}:
+  {{{this.description}}}
+{{/each}}
 ```
 
 ## Frequently Asked Questions
