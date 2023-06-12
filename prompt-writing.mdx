@@ -150,7 +150,8 @@ This is equivalent to the following JSON structure in the API:
 
 Here are some additional important notes:
 
-- You can use variables in any of the message roles. If you don't specify a role it will default to `USER`.
+- You can use variables in any of the message roles.
+- If you don't specify a role it will default to `USER`.
 - If you don't specify a system message and use a chat model a default system message will be added
 - Any message splits will automatically be removed if you are using a non-chat model
 - There are only three valid roles: `SYSTEM`, `ASSISTANT`, and `USER`. Any other role will be ignored.
